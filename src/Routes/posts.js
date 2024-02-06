@@ -3,12 +3,13 @@ const router = express.Router();
 const helper = require("../helper");
 const model = require("../../model/blogs")
 
+
 const errorsObject = {}; // declare it globally so all render methods are able to pass it as an argument. Empty object serve as default purpose
 
 router.get("/", (request, response) => {
-  const blogs = model.displayBlogs();
-  const requestBody = {}; // no actual utility in this block- declare it in order to pass into render method
   
+  const requestBody = {}; // no actual utility in this block- declare it in order to pass into render method
+  const blogs = model.displayBlogs();
   response.render("posts", {
     title: "posts",
     errorsObject, // no actual utility in this block but mandatory to pass it as part of render method constraint (otherwise ejs file won't find variable)
