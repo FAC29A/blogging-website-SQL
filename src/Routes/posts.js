@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const helper = require("../helper");
 const model = require("../../model/blogs")
-const blogPosts = []
+
 const errorsObject = {};
 
 
@@ -26,7 +26,6 @@ router.get("/", (request, response) => {
   
   response.render("posts", {
     title: "posts",
-    blogPosts,
     errorsObject,
     requestBody,
     helper,
@@ -72,35 +71,34 @@ router.post("/", (request, response) => {
   const name = request.body.name;
   const blogpost = request.body.blogpost;
 
-  console.log(`blogPosts: ${blogPosts}`)
 
-  // //validation and error handling
-  // const errorsObject = {};
-  // if (!name) {
-  //   errorsObject.nameError = "please enter your name";
-  //  }
-  //  if (!blogpost) {
-  //    errorsObject.postError = "please enter a message";
-  //  }
+  //validation and error handling
+  const errorsObject = {};
+  if (!name) {
+    errorsObject.nameError = "please enter your name";
+   }
+   if (!blogpost) {
+     errorsObject.postError = "please enter a message";
+   }
 
-  //  if (Object.keys(errorsObject).length > 0) {
-  //    response.render("posts", {
-  //      title: "posts",
-  //      blogPosts,
-  //      errorsObject,
-  //      requestBody,
-  //      helper,
-  //    });
-  //  } else {
+   if (Object.keys(errorsObject).length > 0) {
+     const blogs = model.displayBlogs();
+     response.render("posts", {
+       title: "posts",
+       errorsObject,
+       requestBody,
+       helper,
+       blogs
+     });
+   } else {
   const blogEntry = {
     name: name,
     blogpost: blogpost
   }
-  console.log(`written: ${blogPosts}`)
-  console.log(blogEntry)
+
   model.createBlog(blogEntry);
   response.redirect("/posts");
-// }
+}
 });
 
 
