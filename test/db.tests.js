@@ -10,19 +10,17 @@ function reset() {
     `)
 }
 
-test("can create a blog post", () => {
+test("can create, delete & display a blog post in the database", () => {
     reset()
 
     const post = model.createBlog({ name: "test", blogpost: "testing" })
     assert.equal(post.name, "test")
     assert.equal(post.id, 1)
     assert.equal(post.blogpost, "testing")
-})
 
-test("can create a blog post", () => {
-    reset()
+    model.deleteTask(post.id)
+    const posts = model.displayBlogs()
+    assert.equal(posts.length, 0)
+   
 
-    const post = model.createBlog({ name: "test", blogpost: "testing" })
-    assert.equal(post.name, "test")
-    assert.equal(post.blogpost, "testing")
 })
