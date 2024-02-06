@@ -5,7 +5,7 @@ const db = require("../database/db")
 const create_blog = db.prepare(/*sql*/ `
     INSERT into blog_posts (name, blogpost)
     VALUES($name, $blogpost)
-    RETURNING name, blogpost, created_at, likes
+    RETURNING id, name, blogpost, created_at, likes
 `)
 
 function createBlog (blog) {
@@ -50,8 +50,6 @@ function deleteTask(id) {
     return delete_blog.run(id)
 }
 
-// comment for pull request testing
-
 //EXPORT YOUR FUNCTIONS!!
 
 module.exports = {
@@ -61,7 +59,7 @@ module.exports = {
     deleteTask
 }
 
-//Testing PRs for Phoebe I don't know what is happening!dfskfdjfdsfjsf
+
 
 
 
