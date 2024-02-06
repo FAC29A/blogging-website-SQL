@@ -47,6 +47,8 @@
               <form action="/posts/delete/<%= post.id %>" method="post">
                 <button type="submit">Delete</button>
               </form>
+                <button onclick = "actOnEdit(event)" data-thisPostId="<%= post.id %>">Edit</button>
+              
             </div>
           </div>
           <div class="post-body">
@@ -59,5 +61,19 @@
     </div>
       <%- include("./partials/footer.ejs") %>
     
+
+      <script>
+        const toggleEditDoneButton = {
+          Edit: button => {button.textContent = "Done"},
+          Done: button => {button.textContent = "Edit"}
+        }
+        const actOnEdit = event => {
+          const postId = event.target.dataset.thisPostId; 
+          const action = event.target.textContent.trim();
+          toggleEditDoneButton[action](event.target)
+
+        }
+
+      </script>
   </body>
 </html>

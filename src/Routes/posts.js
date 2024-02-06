@@ -59,4 +59,10 @@ router.post("/delete/:id", (req, res) => {
   res.redirect("/posts");
 });
 
+
+// router.post("/edit/:id", (req, res) => {
+//   const postId = Number(req.params.id);
+
+// })
+
 module.exports = router;
