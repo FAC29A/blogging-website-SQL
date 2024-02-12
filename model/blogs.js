@@ -31,12 +31,13 @@ const update_blog = db.prepare(/*sql*/`
 UPDATE blog_posts
 SET blogpost = $blogpost
 WHERE id = $id
-
 `)
 
 
 function editTask(task) {
-    return update_blog.get(task)
+   
+    return update_blog.run(task);
+    
 }
 
 //delete functions here:
@@ -48,7 +49,10 @@ WHERE id = ?
 
 function deleteTask(id) {
     return delete_blog.run(id)
+
 }
+
+
 
 //EXPORT YOUR FUNCTIONS!!
 
@@ -58,6 +62,8 @@ module.exports = {
     editTask,
     deleteTask
 }
+
+
 
 
 

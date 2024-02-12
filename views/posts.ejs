@@ -34,26 +34,32 @@
         </div>
       </div>
       <div class="posted-blogs">
-        <% if (blogs.length > 0) { %> <% blogs.forEach(post => { %>
+        <% if (blogs.length > 0) { %> 
+          <% blogs.forEach(post => { %>
         <article class="posts" id="<%= post.id %>">
+          <form action= "/posts/edit/<%= post.id %>" method="post">
           <div class="post-header">
             <div class="post-header-left">
-              <div class="person-name">
-                <h3><%= post.name %></h3>
-              </div>
               <div class="date"><%= post.created_at %></div>
+              <div class="person-name">
+                <input type="text" name="name" value="<%= post.name %>" disabled>
+              </div>
+              <div class="post-body">
+                <input type="text" type="button" name="blogpost" value="<%= post.blogpost %>" disabled>
+              </div>
             </div>
             <div class="post-header-right">
+              <button onclick="toggleEdit(event)">Edit</button>
+            </form >
+
+
               <form action="/posts/delete/<%= post.id %>" method="post">
                 <button type="submit">Delete</button>
               </form>
-                <button onclick = "actOnEdit(event)" data-thisPostId="<%= post.id %>">Edit</button>
-              
+               
             </div>
           </div>
-          <div class="post-body">
-            <p class="blog-post"><%= post.blogpost %></p>
-          </div>
+         
         </article>
 
         <% }) %> <% } %>
@@ -63,16 +69,54 @@
     
 
       <script>
-        const toggleEditDoneButton = {
-          Edit: button => {button.textContent = "Done"},
-          Done: button => {button.textContent = "Edit"}
-        }
-        const actOnEdit = event => {
-          const postId = event.target.dataset.thisPostId; 
-          const action = event.target.textContent.trim();
-          toggleEditDoneButton[action](event.target)
 
+        function toggleEdit(event){
+         
+          const button = event.target; 
+          const form = button.closest("form")
+          
+          const nameInput = form.querySelector('input[name="name"]')
+          const postInput = form.querySelector('input[name="blogpost"]')
+
+          if (button.textContent === "Edit") {
+          button.textContent = "Done";
+          nameInput.removeAttribute('disabled');
+          postInput.removeAttribute('disabled');
+          console.log("hello")
+        } else {
+          button.textContent = "Edit";
+          nameInput.setAttribute('disabled', true);
+          postInput.setAttribute('disabled', true);
+
+          // Update the value attributes with the current input values
+          nameInput.setAttribute('value', nameInput.value);
+          postInput.setAttribute('value', postInput.value);
+
+       
+
+          // Use AJAX to submit the form data
+          const formData = new FormData(form);
+          console.log(formeData)
+          fetch(form.action, {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json(); // assuming response is JSON
+          })
+          .then(data => {
+            console.log(data); // handle response data as needed
+          })
+          .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+          });
         }
+      }
+
+
 
       </script>
   </body>

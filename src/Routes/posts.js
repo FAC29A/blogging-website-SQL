@@ -60,9 +60,25 @@ router.post("/delete/:id", (req, res) => {
 });
 
 
-// router.post("/edit/:id", (req, res) => {
-//   const postId = Number(req.params.id);
+router.post("/edit/:id", (req, res) => {
+  const postId = Number(req.params.id);
+  const name = req.body.name;
+  const blogpost = req.body.blogpost;
 
-// })
+  editBlog = { 
+    name: name,
+    blogpost: blogpost,
+    id: postId  }
+
+  //  console.log(`in backend: ${editBlog}`)
+
+
+  model.editTask(editBlog)
+
+  // res.redirect("/posts");
+
+
+
+})
 
 module.exports = router;
