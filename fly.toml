@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for post-anything on 2024-01-29T19:11:30Z
+# fly.toml app configuration file generated for blogging-website-sql on 2024-02-12T23:04:03Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'post-anything'
+app = 'blogging-website-sql'
 primary_region = 'lhr'
 
 [build]
@@ -20,3 +20,7 @@ primary_region = 'lhr'
   cpu_kind = 'shared'
   cpus = 1
   memory_mb = 1024
+
+[mounts]
+  source="myapp_data"
+  destination="/data"

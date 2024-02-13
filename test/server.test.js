@@ -25,3 +25,5 @@ test("/post route respond to POST request", async () => {
   const body = await response.text();
   assert.match(body, /there you go/);
 });
+
+//test for github action cicd automation 
